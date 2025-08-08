@@ -4,29 +4,17 @@
     very special
 --]]
 
-local component_meta = {}
-
 local component = {
     name = "",
 
     __already_init = false,
-
-    ['get_name'] = function(self): string
-        return self.name
-    end,
 }
+component.__index = component
 
-function component_meta.get_meta(name: string): {}
-    local self = component
-
-    self.name = name
-
-
-    self.__already_init = true
-
-    return self
+function component:say_hi()
+    print("[superclass] hi!")
 end
 
 
 
-return component_meta
+return component
