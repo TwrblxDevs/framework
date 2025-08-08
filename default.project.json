@@ -5,25 +5,32 @@
 
     "StarterGui": {
       "$path": "src/gui",
+
       "$ignoreUnknownInstances": true
     },
 
     "ReplicatedFirst": {
       "First": {
         "$path": "src/first"
-      }
+      },
+
+      "$ignoreUnknownInstances": true
     },
 
     "ReplicatedStorage": {
       "Shared": {
         "$path": "src/shared"
-      }
+      },
+
+      "$ignoreUnknownInstances": true
     },
 
     "ServerScriptService": {
       "Server": {
         "$path": "src/server"
-      }
+      },
+
+      "$ignoreUnknownInstances": true
     },
 
     "StarterPlayer": {
@@ -31,7 +38,9 @@
         "Client": {
           "$path": "src/client"
         }
-      }
+      },
+
+      "$ignoreUnknownInstances": true
     },
 
     "Workspace": {
