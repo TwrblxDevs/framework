@@ -1,9 +1,6 @@
-local re = require(game.ReplicatedStorage.Shared)
+local super = require(game.ReplicatedStorage.Shared["@special"].component)
 
 local import = {}
-
-function import.get()
-
-end
+setmetatable(import, super.get_meta("components/import"))
 
 return import
