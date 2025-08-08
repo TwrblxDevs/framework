@@ -1,6 +1,15 @@
+####### generated #######
+
 # Project place file
 /framework.rbxlx
 
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
+
+######### manual ########
+
+# vscode junk
+/.vscode
+
+#########################
