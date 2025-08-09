@@ -14,7 +14,7 @@ local function _isHttpAllowed()
 end
 
 local function _isUrlSafe(url: string)
-	for _, safeUrl in g_globals.Const.Http.safe_urls do
+	for _, safeUrl in ipairs(g_globals.Const.Http.safe_urls) do
 		if url:sub(1, #safeUrl) == safeUrl then
 			return true
 		end
