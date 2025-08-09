@@ -69,7 +69,7 @@ function checkLevel(n: number): boolean
 end
 
 function Log.Info(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.INFO) then return end
+    if not checkLevel(g_enum.LOGLEVEL.INFO) then return Log end
 
     write(source, msg, g_enum.LOGLEVEL.INFO)
 
@@ -77,7 +77,7 @@ function Log.Info(msg: string,source: string): {}
 end
 
 function Log.Warn(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.WARNING) then return end
+    if not checkLevel(g_enum.LOGLEVEL.WARNING) then return Log end
 
     write(source, msg, g_enum.LOGLEVEL.WARNING)
 
@@ -85,7 +85,7 @@ function Log.Warn(msg: string,source: string): {}
 end
 
 function Log.Error(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.ERROR) then return end
+    if not checkLevel(g_enum.LOGLEVEL.ERROR) then return Log end
 
     write(source, msg, g_enum.LOGLEVEL.ERROR)
 
@@ -93,7 +93,7 @@ function Log.Error(msg: string,source: string): {}
 end
 
 function Log.Debug(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.DEBUG) then return end
+    if not checkLevel(g_enum.LOGLEVEL.DEBUG) then return Log end
 
     write(source, msg, g_enum.LOGLEVEL.DEBUG)
 
@@ -101,10 +101,10 @@ function Log.Debug(msg: string,source: string): {}
 end
 
 export type Logger = {
-    Info  :(string) -> Logger,
-    Warn  :(string) -> Logger,
-    Error :(string) -> Logger,
-    Debug :(string) -> Logger,
+    Info  :(self :Logger, string) -> Logger,
+    Warn  :(self :Logger, string) -> Logger,
+    Error :(self :Logger, string) -> Logger,
+    Debug :(self :Logger, string) -> Logger,
 
     __source :string,
 }
