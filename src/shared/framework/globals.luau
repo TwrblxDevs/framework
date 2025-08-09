@@ -1,3 +1,5 @@
+local HttpService = game:GetService("HttpService")
+
 local Globals = {
 	["Const"] = {
 		["bl_loaded"] = false,
@@ -11,6 +13,22 @@ local Globals = {
 				"https://roblox.com",
 				"http://localhost",
 				"http://api.emgkwc.com"
+			},
+		},
+
+		['Github'] = {
+			['sz_organization'] = "Rift-Creations-Inc",
+			['sz_repo'] = "framework",
+			['sz_url'] = "https://github.com/Rift-Creations-Inc/framework/",
+			['branches'] = {
+				'main',
+				'development'
+			},
+			['LastCommit'] = {
+				['sz_sha'] = "",
+				['sz_message'] = "",
+				['sz_author'] = "",
+				['sz_commit_date'] = "",
 			},
 		},
 	},
@@ -42,6 +60,34 @@ local Globals = {
 		["ll_log_level"] = 0, -- Globals.Enum.LOGLEVEL.DEBUG --
 	},
 }
+
+
+-- init some Globals before we freeze...
+local apiUrl = `https://api.github.com/repos/{Globals.Const.Github.sz_organization}/{Globals.Const.Github.sz_repo}/commits`
+
+local ok, response = pcall(function()
+	return HttpService:GetAsync(apiUrl)
+end)
+
+if ok then
+	if response then
+		local commits = HttpService:JSONDecode(response)
+
+		if commits and #commits > 0 then
+			local latest = commits[1]
+			print(latest)
+			local commit_data = Globals.Const.Github.LastCommit
+
+			commit_data.sz_sha = latest.sha
+			commit_data.sz_message = latest.commit.message
+			commit_data.sz_author = latest.commit.author.name
+			commit_data.sz_commit_date = latest.commit.author.date
+		end
+	end
+else
+	warn("error fetching github api: "..response)
+end
+
 
 table.freeze(Globals.Const)
 
