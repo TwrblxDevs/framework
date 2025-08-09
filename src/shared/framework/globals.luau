@@ -63,6 +63,7 @@ local Globals = {
 
 
 -- init some Globals before we freeze...
+--		ts worked first  try :)
 local apiUrl = `https://api.github.com/repos/{Globals.Const.Github.sz_organization}/{Globals.Const.Github.sz_repo}/commits`
 
 local ok, response = pcall(function()
