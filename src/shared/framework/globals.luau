@@ -7,14 +7,9 @@ local Globals = {
 		["bl_enable_external_log"] = true,
 		["Http"] = {
 			["bl_enabled"] = true, -- Enable HTTP requests
-			["bl_debug"] = false, -- Enable HTTP debug logging
 			["safe_urls"] = {
 				"https://roblox.com",
 				"http://localhost",
-			},
-			["misc"] = {
-				["max_retries"] = 3, -- Maximum number of retries for failed requests
-				["retry_delay"] = 1, -- Delay between retries in seconds
 			},
 		},
 	},
