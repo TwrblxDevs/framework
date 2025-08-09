@@ -17,6 +17,7 @@ local Log = {
 	-- only for better organization
 	["Logger"] = {},
 }
+g_tools.Signal.Add(Log.Etc.re_log_client.OnServerEvent)
 
 function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: string)
 	if not g_globals.Const.bl_enable_external_log then
@@ -37,18 +38,25 @@ function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: st
 	end)
 end
 
-function getClientLogEvent(_,source: string,msg: string,lvl: number): never
+function getClientLogEvent(_: Player,source: string,msg: string,lvl: number): never
+    print("got")
 	Log.__doExtendedWrite(source, msg, lvl, "CLIENT")
 end
 
-Log.Etc.re_log_client.OnServerEvent:Connect(getClientLogEvent)
+if RunService:IsServer() then
+    print("server")
+    local connection = Log.Etc.re_log_client.OnServerEvent:Connect(getClientLogEvent)
+    g_tools.Connection.Add(connection)
+end
+    
 
 function Log.extendedWrite(source: string,msg: string,lvl: number): never
 	if g_globals.Const.bl_enable_external_log == false then return end
+    print("write externally...")
 
 	if RunService:IsClient() then
-		local lp = game:GetService('Players').LocalPlayer
-		Log.Etc.re_log_client:FireClient(lp,source,msg,lvl)
+        print("firing")
+		Log.Etc.re_log_client:FireServer(source,msg,lvl)
 	else
 		Log.__doExtendedWrite(source, msg, lvl, "SERVER")
 	end
