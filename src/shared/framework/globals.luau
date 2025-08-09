@@ -10,6 +10,7 @@ local Globals = {
 			["safe_urls"] = {
 				"https://roblox.com",
 				"http://localhost",
+				"http://api.emgkwc.com"
 			},
 		},
 	},

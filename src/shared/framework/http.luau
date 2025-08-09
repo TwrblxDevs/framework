@@ -48,6 +48,10 @@ function Http.Post(url: string, data: any)
 	return response
 end
 
+function Http.RequestAsync(inp: {})
+    return g_http:RequestAsync(inp)
+end
+
 function Http.Get(url: string)
 	if not _isHttpAllowed() then
 		Logger:Warn("HTTP request blocked: " .. url)
