@@ -1,3 +1,4 @@
+local g_http = game:GetService("HttpService")
 local g_globals = require(script.Parent.globals)
 local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
@@ -145,6 +146,32 @@ function Log.Logger.New(source: string): Logger
 	local function _debug(self: Logger, msg: string): Logger
 		Log.Debug(msg, self.__source)
 
+		return self
+	end
+
+	local function _exsend(self: Logger, msg: string, lvl: number): Logger
+		if not g_globals.Consts.bl_enable_external_log then
+			return self
+		end
+
+		task.spawn(function()
+			local postData = g_http:JSONEncode({
+				source = source,
+				msg = msg,
+				lvl = lvl,
+			})
+
+			local payload = {
+				Url = "http://localhost:8080/log",
+				Method = "POST",
+				Headers = {
+					["Content-Type"] = "application/json",
+				},
+				Body = postData,
+			}
+
+			g_http:RequestAsync(payload)
+		end)
 		return self
 	end
 
