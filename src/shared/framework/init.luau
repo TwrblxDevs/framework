@@ -1,4 +1,3 @@
-local http = require(script.http)
 local log = require(script.log)
 local g_logger = log.Logger.New("Framework")
 local Framework = {}

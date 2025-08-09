@@ -41,6 +41,8 @@ function getClientLogEvent(_,source: string,msg: string,lvl: number): never
 	Log.__doExtendedWrite(source, msg, lvl, "CLIENT")
 end
 
+Log.Etc.re_log_client.OnServerEvent:Connect(getClientLogEvent)
+
 function Log.extendedWrite(source: string,msg: string,lvl: number): never
 	if g_globals.Const.bl_enable_external_log == false then return end
 
