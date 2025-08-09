@@ -2,7 +2,9 @@ local Globals = {
     ['Const'] = {
         ['bl_loaded'] = false,
         ['sz_version'] = "INDEV",
-        ['sz_current_game'] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name
+        ['sz_current_game'] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name,
+
+        ['bl_enable_external_log'] = true,
     },
     ['Dynamic'] = {
         ['sc_connections'] = {}, -- RBXScriptConnection --
@@ -24,5 +26,7 @@ local Globals = {
     },
 
 }
+
+table.freeze(Globals.Const)
 
 return Globals
