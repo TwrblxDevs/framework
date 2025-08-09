@@ -1,10 +1,13 @@
 local g_globals = require(script.Parent.globals)
+local RunService = game:GetService("RunService")
 local g_http = game:GetService("HttpService")
 local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
 
 local Log = {
-	["Etc"] = {},
+	["Etc"] = {
+		['re_log_client'] = Instance.new("RemoteEvent");
+	},
 
 	["data"] = {
 		["bl_created_sink_signal"] = false,
@@ -15,23 +18,38 @@ local Log = {
 	["Logger"] = {},
 }
 
-function Log.__doExtendedWrite(source: string, msg: string, lvl: number)
+function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: string)
 	if not g_globals.Const.bl_enable_external_log then
 		return
 	end
 
 	task.spawn(function()
 		local payload
-		local pData = `{source}::{msg}::{lvl}`
+		local pData = `{area};{source};{msg};{lvl}`
 
 		payload = {
-			Url = "https://localhost:8080/log",
+			Url = "http://localhost:8080/log",
 			Method = "POST",
 			Body = pData,
 		}
 
-		g_http.RequestAsync(payload)
+		g_http:RequestAsync(payload)
 	end)
+end
+
+function getClientLogEvent(_,source: string,msg: string,lvl: number): never
+	Log.__doExtendedWrite(source, msg, lvl, "CLIENT")
+end
+
+function Log.extendedWrite(source: string,msg: string,lvl: number): never
+	if g_globals.Const.bl_enable_external_log == false then return end
+
+	if RunService:IsClient() then
+		local lp = game:GetService('Players').LocalPlayer
+		Log.Etc.re_log_client:FireClient(lp,source,msg,lvl)
+	else
+		Log.__doExtendedWrite(source, msg, lvl, "SERVER")
+	end
 end
 
 function Log.Etc.ConnectToLogSink(fn: (msg: string, source: string, lvl: number) -> never)
@@ -55,7 +73,7 @@ function write(source: string, message: string, lvl: number, bypass: boolean?): 
 		Log.data.real_sink_event:Fire(message, source, lvl)
 	end
 
-	Log.__doExtendedWrite(source, message, lvl)
+	Log.extendedWrite(source, message, lvl)
 
 	if lvl == g_enum.LOGLEVEL.INFO then
 		print(`[{source}] {message}`)
