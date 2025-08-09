@@ -24,6 +24,30 @@ local function _isUrlSafe(url: string)
 	return false
 end
 
+function Http.Post(url: string, data: any)
+	if not _isHttpAllowed() then
+		Logger:Warn("HTTP request blocked: " .. url)
+		return nil
+	end
+
+	if not _isUrlSafe(url) then
+		Logger:Warn("Unsafe URL blocked: " .. url)
+		return nil
+	end
+
+	local success, response = pcall(function()
+		return g_http:PostAsync(url, g_http:JSONEncode(data), Enum.HttpContentType.ApplicationJson)
+	end)
+
+	if not success then
+		Logger:Error("HTTP POST request failed: " .. response)
+		return nil
+	end
+
+	Logger:Info("HTTP POST request successful: " .. url)
+	return response
+end
+
 function Http.Get(url: string)
 	if not _isHttpAllowed() then
 		Logger:Warn("HTTP request blocked: " .. url)
