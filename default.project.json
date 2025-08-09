@@ -4,13 +4,15 @@
     "$className": "DataModel",
 
     "StarterGui": {
-      "$path": "src/ui",
+      "rift_framework": {
+        "$path": "src/ui"
+      },
 
       "$ignoreUnknownInstances": true
     },
 
     "ReplicatedFirst": {
-      "First": {
+      "rift_framework": {
         "$path": "src/first"
       },
 
@@ -18,7 +20,7 @@
     },
 
     "ReplicatedStorage": {
-      "Shared": {
+      "rift_framework": {
         "$path": "src/shared"
       },
 
@@ -26,7 +28,7 @@
     },
 
     "ServerScriptService": {
-      "Server": {
+      "rift_framework": {
         "$path": "src/server"
       },
 
@@ -35,7 +37,7 @@
 
     "StarterPlayer": {
       "StarterPlayerScripts": {
-        "Client": {
+        "rift_framework": {
           "$path": "src/client"
         }
       },
