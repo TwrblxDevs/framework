@@ -3,147 +3,157 @@ local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
 
 local Log = {
-    ['Etc'] = {},
+	["Etc"] = {},
 
-    ['data'] = {
-        ['bl_created_sink_signal'] = false,
-        ['real_sink_event'] = nil
-    },
+	["data"] = {
+		["bl_created_sink_signal"] = false,
+		["real_sink_event"] = nil,
+	},
 
-    -- only for better organization help
-    ['Logger'] = {},
+	-- only for better organization
+	["Logger"] = {},
 }
 
 function Log.Etc.ConnectToLogSink(fn: (msg: string, source: string, lvl: number) -> never)
-    if Log.data.bl_created_sink_signal == false then
-        Log.data.real_sink_event = Instance.new("BindableEvent")
-        g_tools.Signal.Add(Log.data.real_sink_event.Event)
+	if Log.data.bl_created_sink_signal == false then
+		Log.data.real_sink_event = Instance.new("BindableEvent")
+		g_tools.Signal.Add(Log.data.real_sink_event.Event)
 
-        Log.data.bl_created_sink_signal = true
-    end
+		Log.data.bl_created_sink_signal = true
+	end
 
-    local sc = Log.data.real_sink_event.Event:Connect(fn)
-    g_tools.Connection.Add(sc)
+	local sc = Log.data.real_sink_event.Event:Connect(fn)
+	g_tools.Connection.Add(sc)
 end
 
-function write(source: string,message: string,lvl: number,bypass: boolean?): never
-    if lvl == g_enum.LOGLEVEL.NONE and bypass ~= true then return end
+function write(source: string, message: string, lvl: number, bypass: boolean?): never
+	if lvl == g_enum.LOGLEVEL.NONE and bypass ~= true then
+		return
+	end
 
-    if Log.data.bl_created_sink_signal then
-        Log.data.real_sink_event:Fire(message,source,lvl)
-    end
+	if Log.data.bl_created_sink_signal then
+		Log.data.real_sink_event:Fire(message, source, lvl)
+	end
 
-    if lvl == g_enum.LOGLEVEL.INFO then
-        print(`[{source}] {message}`)
+	if lvl == g_enum.LOGLEVEL.INFO then
+		print(`[{source}] {message}`)
 
-        return
-    end
+		return
+	end
 
-    if lvl == g_enum.LOGLEVEL.WARNING then
-        warn(`[{source}/WRN] {message}`)
+	if lvl == g_enum.LOGLEVEL.WARNING then
+		warn(`[{source}/WRN] {message}`)
 
-        return
-    end
+		return
+	end
 
-    if lvl == g_enum.LOGLEVEL.ERROR then
-        warn(`[{source}/ERR] {message}`)
+	if lvl == g_enum.LOGLEVEL.ERROR then
+		warn(`[{source}/ERR] {message}`)
 
-        return
-    end
+		return
+	end
 
-    if lvl == g_enum.LOGLEVEL.DEBUG then
-        print(`[{source}/DBG] {message}`)
+	if lvl == g_enum.LOGLEVEL.DEBUG then
+		print(`[{source}/DBG] {message}`)
 
-        return
-    end
+		return
+	end
 
-    return
+	return
 end
 
 function checkLevel(n: number): boolean
-    if g_globals.Misc.ll_log_level > n then
-        return false
-    end
+	if g_globals.Misc.ll_log_level > n then
+		return false
+	end
 
-    return true
+	return true
 end
 
-function Log.Info(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.INFO) then return Log end
+function Log.Info(msg: string, source: string): {}
+	if not checkLevel(g_enum.LOGLEVEL.INFO) then
+		return
+	end
 
-    write(source, msg, g_enum.LOGLEVEL.INFO)
+	write(source, msg, g_enum.LOGLEVEL.INFO)
 
-    return Log
+	return Log
 end
 
-function Log.Warn(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.WARNING) then return Log end
+function Log.Warn(msg: string, source: string): {}
+	if not checkLevel(g_enum.LOGLEVEL.WARNING) then
+		return
+	end
 
-    write(source, msg, g_enum.LOGLEVEL.WARNING)
+	write(source, msg, g_enum.LOGLEVEL.WARNING)
 
-    return Log
+	return Log
 end
 
-function Log.Error(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.ERROR) then return Log end
+function Log.Error(msg: string, source: string): {}
+	if not checkLevel(g_enum.LOGLEVEL.ERROR) then
+		return Log
+	end
 
-    write(source, msg, g_enum.LOGLEVEL.ERROR)
+	write(source, msg, g_enum.LOGLEVEL.ERROR)
 
-    return Log
+	return Log
 end
 
-function Log.Debug(msg: string,source: string): {}
-    if not checkLevel(g_enum.LOGLEVEL.DEBUG) then return Log end
+function Log.Debug(msg: string, source: string): {}
+	if not checkLevel(g_enum.LOGLEVEL.DEBUG) then
+		return
+	end
 
-    write(source, msg, g_enum.LOGLEVEL.DEBUG)
+	write(source, msg, g_enum.LOGLEVEL.DEBUG)
 
-    return Log
+	return Log
 end
 
 export type Logger = {
-    Info  :(self :Logger, string) -> Logger,
-    Warn  :(self :Logger, string) -> Logger,
-    Error :(self :Logger, string) -> Logger,
-    Debug :(self :Logger, string) -> Logger,
+	Info: (string) -> Logger,
+	Warn: (string) -> Logger,
+	Error: (string) -> Logger,
+	Debug: (string) -> Logger,
 
-    __source :string,
+	__source: string,
 }
 
 function Log.Logger.New(source: string): Logger
-    local ret :Logger = {
-        __source = source
-    }
+	local ret: Logger = {
+		__source = source,
+	}
 
-    local function _info(self :Logger, msg :string): Logger
-        Log.Info(msg, self.__source)
+	local function _info(self: Logger, msg: string): Logger
+		Log.Info(msg, self.__source)
 
-        return self
-    end
+		return self
+	end
 
-    local function _warn(self :Logger, msg :string): Logger
-        Log.Warn(msg, self.__source)
+	local function _warn(self: Logger, msg: string): Logger
+		Log.Warn(msg, self.__source)
 
-        return self
-    end
+		return self
+	end
 
-    local function _error(self :Logger, msg :string): Logger
-        Log.Error(msg, self.__source)
+	local function _error(self: Logger, msg: string): Logger
+		Log.Error(msg, self.__source)
 
-        return self
-    end
+		return self
+	end
 
-    local function _debug(self :Logger, msg :string): Logger
-        Log.Debug(msg, self.__source)
+	local function _debug(self: Logger, msg: string): Logger
+		Log.Debug(msg, self.__source)
 
-        return self
-    end
+		return self
+	end
 
-    ret.Debug = _debug
-    ret.Info = _info
-    ret.Warn = _warn
-    ret.Error = _error
+	ret.Debug = _debug
+	ret.Info = _info
+	ret.Warn = _warn
+	ret.Error = _error
 
-    return ret
+	return ret
 end
 
 return Log
