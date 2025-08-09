@@ -10,7 +10,7 @@ local Log = {
         ['real_sink_event'] = nil
     },
 
-    -- only for better organization
+    -- only for better organization help
     ['Logger'] = {},
 }
 
