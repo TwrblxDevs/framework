@@ -149,32 +149,6 @@ function Log.Logger.New(source: string): Logger
 		return self
 	end
 
-	local function _exsend(self: Logger, msg: string, lvl: number): Logger
-		if not g_globals.Consts.bl_enable_external_log then
-			return self
-		end
-
-		task.spawn(function()
-			local postData = g_http:JSONEncode({
-				source = source,
-				msg = msg,
-				lvl = lvl,
-			})
-
-			local payload = {
-				Url = "http://localhost:8080/log",
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json",
-				},
-				Body = postData,
-			}
-
-			g_http:RequestAsync(payload)
-		end)
-		return self
-	end
-
 	ret.Debug = _debug
 	ret.Info = _info
 	ret.Warn = _warn
