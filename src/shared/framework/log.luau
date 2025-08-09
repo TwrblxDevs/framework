@@ -34,7 +34,7 @@ function write(source: string,message: string,lvl: number,bypass: boolean?): nev
     end
 
     if lvl == g_enum.LOGLEVEL.INFO then
-        print(`[{source}/INF] {message}`)
+        print(`[{source}] {message}`)
 
         return
     end
@@ -61,50 +61,50 @@ function write(source: string,message: string,lvl: number,bypass: boolean?): nev
 end
 
 function checkLevel(n: number): boolean
-    if g_globals.Misc.ll_log_level >= n then
+    if g_globals.Misc.ll_log_level > n then
         return false
     end
 
     return true
 end
 
-function Log.Info(msg: string,source: string): never
+function Log.Info(msg: string,source: string): {}
     if not checkLevel(g_enum.LOGLEVEL.INFO) then return end
 
     write(source, msg, g_enum.LOGLEVEL.INFO)
 
-    return
+    return Log
 end
 
-function Log.Warn(msg: string,source: string): never
+function Log.Warn(msg: string,source: string): {}
     if not checkLevel(g_enum.LOGLEVEL.WARNING) then return end
 
     write(source, msg, g_enum.LOGLEVEL.WARNING)
 
-    return
+    return Log
 end
 
-function Log.Error(msg: string,source: string): never
+function Log.Error(msg: string,source: string): {}
     if not checkLevel(g_enum.LOGLEVEL.ERROR) then return end
 
     write(source, msg, g_enum.LOGLEVEL.ERROR)
 
-    return
+    return Log
 end
 
-function Log.Debug(msg: string,source: string): never
+function Log.Debug(msg: string,source: string): {}
     if not checkLevel(g_enum.LOGLEVEL.DEBUG) then return end
 
     write(source, msg, g_enum.LOGLEVEL.DEBUG)
 
-    return
+    return Log
 end
 
 export type Logger = {
-    Info  :(string) -> never,
-    Warn  :(string) -> never,
-    Error :(string) -> never,
-    Debug :(string) -> never,
+    Info  :(string) -> Logger,
+    Warn  :(string) -> Logger,
+    Error :(string) -> Logger,
+    Debug :(string) -> Logger,
 
     __source :string,
 }
@@ -114,20 +114,28 @@ function Log.Logger.New(source: string): Logger
         __source = source
     }
 
-    local function _info(self :Logger, msg :string)
+    local function _info(self :Logger, msg :string): Logger
         Log.Info(msg, self.__source)
+
+        return self
     end
 
-    local function _warn(self :Logger, msg :string)
+    local function _warn(self :Logger, msg :string): Logger
         Log.Warn(msg, self.__source)
+
+        return self
     end
 
-    local function _error(self :Logger, msg :string)
+    local function _error(self :Logger, msg :string): Logger
         Log.Error(msg, self.__source)
+
+        return self
     end
 
-    local function _debug(self :Logger, msg :string)
+    local function _debug(self :Logger, msg :string): Logger
         Log.Debug(msg, self.__source)
+
+        return self
     end
 
     ret.Debug = _debug

@@ -1,6 +1,7 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local framework = require(ReplicatedStorage.rift_framework.framework)
+local Logger = require(game.ReplicatedStorage.rift_framework.framework.log).Logger.New(script.Name)
 
-task.wait(3)
-print('***** RUNNING TESTS *****')
-framework.runTests()
+Logger
+    :Info("hi! :)")
+    :Debug("debug message here")
+    :Warn("don't do that!")
+    :Error("oh noes!")
