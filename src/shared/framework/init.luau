@@ -6,7 +6,7 @@ local Framework = {}
 function Framework.runTests()
     local logger = log.Logger.New("Framework::runTests")
 
-    logger:Info("latest commit")
+    logger:Info("latest commit (Globals.Const.Github.LastCommit)")
     logger
         :Info("     author="..g_commit.sz_author)
         :Info("     message=\""..g_commit.sz_message)
