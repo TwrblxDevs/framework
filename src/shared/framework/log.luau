@@ -1,5 +1,5 @@
 local g_globals = require(script.Parent.globals)
---local g_http = require(script.Parent.http)
+local g_http = game:GetService("HttpService")
 local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
 
@@ -15,21 +15,23 @@ local Log = {
 	["Logger"] = {},
 }
 
-function Log.__doExtendedWrite(source: string,msg: string,lvl: number)
-    if not g_globals.Const.bl_enable_external_log then return end
+function Log.__doExtendedWrite(source: string, msg: string, lvl: number)
+	if not g_globals.Const.bl_enable_external_log then
+		return
+	end
 
-    task.spawn(function()
-        local payload
-        local pData = `{source}::{msg}::{lvl}`
+	task.spawn(function()
+		local payload
+		local pData = `{source}::{msg}::{lvl}`
 
-        payload = {
-            Url = "https://localhost:8080/log",
-            Method = "POST",
-            Body = pData
-        }
+		payload = {
+			Url = "https://localhost:8080/log",
+			Method = "POST",
+			Body = pData,
+		}
 
-        g_http.RequestAsync(payload)
-    end)
+		g_http.RequestAsync(payload)
+	end)
 end
 
 function Log.Etc.ConnectToLogSink(fn: (msg: string, source: string, lvl: number) -> never)
@@ -44,7 +46,6 @@ function Log.Etc.ConnectToLogSink(fn: (msg: string, source: string, lvl: number)
 	g_tools.Connection.Add(sc)
 end
 
-
 function write(source: string, message: string, lvl: number, bypass: boolean?): never
 	if lvl == g_enum.LOGLEVEL.NONE and bypass ~= true then
 		return
@@ -54,7 +55,7 @@ function write(source: string, message: string, lvl: number, bypass: boolean?): 
 		Log.data.real_sink_event:Fire(message, source, lvl)
 	end
 
-    Log.__doExtendedWrite(source, message, lvl)
+	Log.__doExtendedWrite(source, message, lvl)
 
 	if lvl == g_enum.LOGLEVEL.INFO then
 		print(`[{source}] {message}`)
