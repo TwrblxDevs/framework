@@ -163,34 +163,34 @@ export type Logger = {
 	Error: (self: Logger,string) -> Logger,
 	Debug: (self: Logger,string) -> Logger,
 
-	__source: string,
+	source: string,
 }
 
 function Log.Logger.New(source: string): Logger
 	local ret: Logger = {
-		__source = source,
+		source = source,
 	}
 
 	local function _info(self: Logger, msg: string): Logger
-		Log.Info(msg, self.__source)
+		Log.Info(msg, self.source)
 
 		return self
 	end
 
 	local function _warn(self: Logger, msg: string): Logger
-		Log.Warn(msg, self.__source)
+		Log.Warn(msg, self.source)
 
 		return self
 	end
 
 	local function _error(self: Logger, msg: string): Logger
-		Log.Error(msg, self.__source)
+		Log.Error(msg, self.source)
 
 		return self
 	end
 
 	local function _debug(self: Logger, msg: string): Logger
-		Log.Debug(msg, self.__source)
+		Log.Debug(msg, self.source)
 
 		return self
 	end
