@@ -12,12 +12,6 @@ local Tools = {
 	["Object"] = {},
 }
 
--- DEPERCATED
-function llog(_msg: string)
-	print("[tools] ".._msg)
-	return
-end
-
 function Tools.Connection.Add(connection: RBXScriptConnection): never
 	table.insert(g_globals.Dynamic.sc_connections, connection)
 end
