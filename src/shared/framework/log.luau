@@ -158,10 +158,10 @@ function Log.Debug(msg: string, source: string): {}
 end
 
 export type Logger = {
-	Info: (string) -> Logger,
-	Warn: (string) -> Logger,
-	Error: (string) -> Logger,
-	Debug: (string) -> Logger,
+	Info: (self: Logger,string) -> Logger,
+	Warn: (self: Logger,string) -> Logger,
+	Error: (self: Logger,string) -> Logger,
+	Debug: (self: Logger,string) -> Logger,
 
 	__source: string,
 }
