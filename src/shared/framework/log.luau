@@ -1,8 +1,8 @@
+
 local g_globals = require(script.Parent.globals)
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local g_types = require(script.Parent.types)
 local RunService = game:GetService("RunService")
 local g_http = game:GetService("HttpService")
-local logger_t = require(ReplicatedStorage.rift_framework.framework.object.logger)
 local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
 
@@ -17,7 +17,7 @@ local Log = {
 	},
 
 	-- only for better organization
-	["Logger"] = {},
+	["g_types.Logger"] = {},
 }
 Log.Etc.re_log_client.Parent = script.Parent.events
 g_tools.Signal.Add(Log.Etc.re_log_client.OnServerEvent)
@@ -159,42 +159,45 @@ function Log.Debug(msg: string, source: string): {}
 	return Log
 end
 
-function Log.Logger.New(source: string): logger_t.Logger
-	local ret = logger_t.get()
-	ret.data.sz_original_source = source
-	ret.data.sz_source = source
+function Log.Logger.New(source: string): g_types.Logger
+	local ret: g_types.Logger = {
+		data = {
+			sz_source = source,
+			sz_original_source = source,
+		},
+	}
 
-	local function _info(self: logger_t.Logger, msg: string): logger_t.Logger
+	local function _info(self: g_types.Logger, msg: string): g_types.Logger
 		Log.Info(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _warn(self: logger_t.Logger, msg: string): logger_t.Logger
+	local function _warn(self: g_types.Logger, msg: string): g_types.Logger
 		Log.Warn(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _error(self: logger_t.Logger, msg: string): logger_t.Logger
+	local function _error(self: g_types.Logger, msg: string): g_types.Logger
 		Log.Error(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _debug(self: logger_t.Logger, msg: string): logger_t.Logger
+	local function _debug(self: g_types.Logger, msg: string): g_types.Logger
 		Log.Debug(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _enter_func(self: logger_t.Logger,name: string): logger_t.Logger
+	local function _enter_func(self: g_types.Logger,name: string): g_types.Logger
 		self.data.bl_is_inside_function = true
 		self.data.sz_source = self.__data.sz_original_source.."::"..name
 		return self
 	end
 
-	local function _exit_func(self: logger_t.Logger): logger_t.Logger
+	local function _exit_func(self: g_types.Logger): g_types.Logger
 		self.data.bl_is_inside_function = false
 		self.data.sz_source = self.__data.sz_original_source
 		return self
