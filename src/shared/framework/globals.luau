@@ -24,9 +24,7 @@ local Globals = {
 			['sz_url'] = "https://github.com/Rift-Creations-Inc/framework/",
 
 			['Branches'] = {
-
 				['main'] = {
-
 					['LatestCommit'] = {
 						['sz_sha'] = "",
 						['sz_message'] = "",
@@ -36,7 +34,6 @@ local Globals = {
 				},
 
 				['development'] = {
-
 					['LatestCommit'] = {
 						['sz_sha'] = "",
 						['sz_message'] = "",
@@ -44,7 +41,6 @@ local Globals = {
 						['sz_commit_date'] = "",
 					}
 				},
-
 			},
 		},
 	},
@@ -110,7 +106,8 @@ if ok then
 else
 	warn("error fetching github api: "..response)
 end
---
+
+
 -- framework:development
 ok, response = pcall(function()
 	return HttpService:GetAsync(devel_url)
