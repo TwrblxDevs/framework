@@ -9,7 +9,7 @@ function Framework.runTests()
     logger:Info("latest commit (Globals.Const.Github.LastCommit)")
     logger
         :Info("     author="..g_commit.sz_author)
-        :Info("     message=\""..g_commit.sz_message)
+        :Info("     message=\""..g_commit.sz_message.."\"")
         :Info("     date="..g_commit.sz_commit_date)
         :Info("     sha="..g_commit.sz_sha)
 end

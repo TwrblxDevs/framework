@@ -29,6 +29,8 @@ local Globals = {
 				['sz_message'] = "",
 				['sz_author'] = "",
 				['sz_commit_date'] = "",
+
+				['dw_commit_num'] = 0,
 			},
 		},
 	},
@@ -76,13 +78,14 @@ if ok then
 
 		if commits and #commits > 0 then
 			local latest = commits[1]
-			print(latest)
 			local commit_data = Globals.Const.Github.LastCommit
 
 			commit_data.sz_sha = latest.sha
 			commit_data.sz_message = latest.commit.message
 			commit_data.sz_author = latest.commit.author.name
 			commit_data.sz_commit_date = latest.commit.author.date
+
+			commit_data.dw_commit_num = #commits
 		end
 	end
 else

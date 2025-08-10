@@ -39,12 +39,10 @@ function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: st
 end
 
 function getClientLogEvent(_: Player,source: string,msg: string,lvl: number): never
-    print("got")
 	Log.__doExtendedWrite(source, msg, lvl, "CLIENT")
 end
 
 if RunService:IsServer() then
-    print("server")
     local connection = Log.Etc.re_log_client.OnServerEvent:Connect(getClientLogEvent)
     g_tools.Connection.Add(connection)
 end
@@ -52,10 +50,8 @@ end
 
 function Log.extendedWrite(source: string,msg: string,lvl: number): never
 	if g_globals.Const.bl_enable_external_log == false then return end
-    print("write externally...")
 
 	if RunService:IsClient() then
-        print("firing")
 		Log.Etc.re_log_client:FireServer(source,msg,lvl)
 	else
 		Log.__doExtendedWrite(source, msg, lvl, "SERVER")
