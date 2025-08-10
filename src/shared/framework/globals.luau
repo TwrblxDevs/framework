@@ -26,7 +26,7 @@ local Globals = {
 			['Branches'] = {
 
 				['main'] = {
-					
+
 					['LatestCommit'] = {
 						['sz_sha'] = "",
 						['sz_message'] = "",
@@ -95,14 +95,13 @@ if ok then
 
 		if commits and #commits > 0 then
 			local latest = commits[1]
-			local commit_data = Globals.Const.Github.LastCommit
+			local commit_data = Globals.Const.Github.Branches.main.LatestCommit
 
 			commit_data.sz_sha = latest.sha
 			commit_data.sz_message = latest.commit.message
 			commit_data.sz_author = latest.commit.author.name
 			commit_data.sz_commit_date = latest.commit.author.date
 
-			commit_data.dw_commit_num = #commits
 		else
 			warn(response)
 		end
@@ -123,14 +122,13 @@ if ok then
 
 		if commits and #commits > 0 then
 			local latest = commits[1]
-			local commit_data = Globals.Const.Github.LastCommit
+			local commit_data = Globals.Const.Github.Branches.development.LatestCommit
 
 			commit_data.sz_sha = latest.sha
 			commit_data.sz_message = latest.commit.message
 			commit_data.sz_author = latest.commit.author.name
 			commit_data.sz_commit_date = latest.commit.author.date
 
-			commit_data.dw_commit_num = #commits
 		else
 			warn(response)
 		end
