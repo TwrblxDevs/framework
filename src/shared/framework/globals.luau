@@ -24,9 +24,7 @@ local Globals = {
 			['sz_url'] = "https://github.com/Rift-Creations-Inc/framework/",
 
 			['Branches'] = {
-
 				['main'] = {
-
 					['LatestCommit'] = {
 						['sz_sha'] = "",
 						['sz_message'] = "",
@@ -36,7 +34,6 @@ local Globals = {
 				},
 
 				['development'] = {
-
 					['LatestCommit'] = {
 						['sz_sha'] = "",
 						['sz_message'] = "",
@@ -44,7 +41,6 @@ local Globals = {
 						['sz_commit_date'] = "",
 					}
 				},
-
 			},
 		},
 	},

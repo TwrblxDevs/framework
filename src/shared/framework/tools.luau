@@ -8,22 +8,22 @@ local Tools = {
 	["Signal"] = {},
 
 	["Macros"] = {},
+
+	["Object"] = {},
 }
 
 -- DEPERCATED
 function llog(_msg: string)
-
+	print("[tools] ".._msg)
 	return
 end
 
 function Tools.Connection.Add(connection: RBXScriptConnection): never
 	table.insert(g_globals.Dynamic.sc_connections, connection)
-	llog("new connection")
 end
 
 function Tools.Signal.Add(signal: RBXScriptSignal): never
 	table.insert(g_globals.Dynamic.ss_signals, signal)
-	llog("new signal")
 end
 
 function Tools.Macros.PlayerInfo(plr: Player): string

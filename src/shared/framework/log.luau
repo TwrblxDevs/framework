@@ -1,6 +1,8 @@
 local g_globals = require(script.Parent.globals)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local g_http = game:GetService("HttpService")
+local logger_t = require(ReplicatedStorage.rift_framework.framework.object.logger)
 local g_tools = require(script.Parent.tools)
 local g_enum = g_globals.Enum
 
@@ -157,41 +159,44 @@ function Log.Debug(msg: string, source: string): {}
 	return Log
 end
 
-export type Logger = {
-	Info: (self: Logger,string) -> Logger,
-	Warn: (self: Logger,string) -> Logger,
-	Error: (self: Logger,string) -> Logger,
-	Debug: (self: Logger,string) -> Logger,
+function Log.Logger.New(source: string): logger_t.Logger
+	local ret = logger_t.get()
+	ret.data.sz_original_source = source
+	ret.data.sz_source = source
 
-	source: string,
-}
-
-function Log.Logger.New(source: string): Logger
-	local ret: Logger = {
-		source = source,
-	}
-
-	local function _info(self: Logger, msg: string): Logger
-		Log.Info(msg, self.source)
+	local function _info(self: logger_t.Logger, msg: string): logger_t.Logger
+		Log.Info(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _warn(self: Logger, msg: string): Logger
-		Log.Warn(msg, self.source)
+	local function _warn(self: logger_t.Logger, msg: string): logger_t.Logger
+		Log.Warn(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _error(self: Logger, msg: string): Logger
-		Log.Error(msg, self.source)
+	local function _error(self: logger_t.Logger, msg: string): logger_t.Logger
+		Log.Error(msg, self.__data.sz_source)
 
 		return self
 	end
 
-	local function _debug(self: Logger, msg: string): Logger
-		Log.Debug(msg, self.source)
+	local function _debug(self: logger_t.Logger, msg: string): logger_t.Logger
+		Log.Debug(msg, self.__data.sz_source)
 
+		return self
+	end
+
+	local function _enter_func(self: logger_t.Logger,name: string): logger_t.Logger
+		self.data.bl_is_inside_function = true
+		self.data.sz_source = self.__data.sz_original_source.."::"..name
+		return self
+	end
+
+	local function _exit_func(self: logger_t.Logger): logger_t.Logger
+		self.data.bl_is_inside_function = false
+		self.data.sz_source = self.__data.sz_original_source
 		return self
 	end
 
@@ -199,6 +204,8 @@ function Log.Logger.New(source: string): Logger
 	ret.Info = _info
 	ret.Warn = _warn
 	ret.Error = _error
+	ret.EnterFunc = _enter_func
+	ret.ExitFunc = _exit_func
 
 	return ret
 end
