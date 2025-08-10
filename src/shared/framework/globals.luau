@@ -17,7 +17,7 @@ local Globals = {
 				"http://api.emgkwc.com"
 			},
 		},
-
+    
 		['Github'] = {
 			['sz_organization'] = "Rift-Creations-Inc",
 			['sz_repo'] = "framework",
