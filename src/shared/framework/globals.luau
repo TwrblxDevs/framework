@@ -4,7 +4,6 @@ local Globals = {
 	["Const"] = {
 		["bl_loaded"] = false,
 		["sz_version"] = "INDEV",
-		['sz_current_branch'] = require(game.ReplicatedStorage.rift_framework[".special"].branch).branchName or "unknown",
 		["sz_current_game"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name,
 		["dw_current_game_version"] = game.PlaceVersion,
 		['dw_latest_game_version'] = game:GetService('InsertService'):GetLatestAssetVersionAsync(game.PlaceId),
