@@ -10,8 +10,10 @@ local Tools = {
 	["Macros"] = {},
 }
 
-function llog(msg: string)
-	print("[*] "..msg)
+-- DEPERCATED
+function llog(_msg: string)
+
+	return
 end
 
 function Tools.Connection.Add(connection: RBXScriptConnection): never

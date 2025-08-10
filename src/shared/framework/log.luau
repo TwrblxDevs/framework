@@ -17,6 +17,7 @@ local Log = {
 	-- only for better organization
 	["Logger"] = {},
 }
+Log.Etc.re_log_client.Parent = script.Parent.events
 g_tools.Signal.Add(Log.Etc.re_log_client.OnServerEvent)
 
 function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: string)
@@ -39,12 +40,10 @@ function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: st
 end
 
 function getClientLogEvent(_: Player,source: string,msg: string,lvl: number): never
-    print("got")
 	Log.__doExtendedWrite(source, msg, lvl, "CLIENT")
 end
 
 if RunService:IsServer() then
-    print("server")
     local connection = Log.Etc.re_log_client.OnServerEvent:Connect(getClientLogEvent)
     g_tools.Connection.Add(connection)
 end
@@ -52,10 +51,8 @@ end
 
 function Log.extendedWrite(source: string,msg: string,lvl: number): never
 	if g_globals.Const.bl_enable_external_log == false then return end
-    print("write externally...")
 
 	if RunService:IsClient() then
-        print("firing")
 		Log.Etc.re_log_client:FireServer(source,msg,lvl)
 	else
 		Log.__doExtendedWrite(source, msg, lvl, "SERVER")
@@ -161,39 +158,39 @@ function Log.Debug(msg: string, source: string): {}
 end
 
 export type Logger = {
-	Info: (string) -> Logger,
-	Warn: (string) -> Logger,
-	Error: (string) -> Logger,
-	Debug: (string) -> Logger,
+	Info: (self: Logger,string) -> Logger,
+	Warn: (self: Logger,string) -> Logger,
+	Error: (self: Logger,string) -> Logger,
+	Debug: (self: Logger,string) -> Logger,
 
-	__source: string,
+	source: string,
 }
 
 function Log.Logger.New(source: string): Logger
 	local ret: Logger = {
-		__source = source,
+		source = source,
 	}
 
 	local function _info(self: Logger, msg: string): Logger
-		Log.Info(msg, self.__source)
+		Log.Info(msg, self.source)
 
 		return self
 	end
 
 	local function _warn(self: Logger, msg: string): Logger
-		Log.Warn(msg, self.__source)
+		Log.Warn(msg, self.source)
 
 		return self
 	end
 
 	local function _error(self: Logger, msg: string): Logger
-		Log.Error(msg, self.__source)
+		Log.Error(msg, self.source)
 
 		return self
 	end
 
 	local function _debug(self: Logger, msg: string): Logger
-		Log.Debug(msg, self.__source)
+		Log.Debug(msg, self.source)
 
 		return self
 	end

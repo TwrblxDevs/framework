@@ -1,17 +1,27 @@
 local g_globals = require(script.globals)
-local g_commit = g_globals.Const.Github.LastCommit
+local g_commit_main = g_globals.Const.Github.Branches.main.LatestCommit
+local g_commit_devel = g_globals.Const.Github.Branches.development.LatestCommit
 local log = require(script.log)
 local Framework = {}
 
 function Framework.runTests()
     local logger = log.Logger.New("Framework::runTests")
 
-    logger:Info("latest commit (Globals.Const.Github.LastCommit)")
     logger
-        :Info("     author="..g_commit.sz_author)
-        :Info("     message=\""..g_commit.sz_message)
-        :Info("     date="..g_commit.sz_commit_date)
-        :Info("     sha="..g_commit.sz_sha)
+        :Info("Globals.Const.Github.Branches.main.LatestCommit [")
+        :Info("     author="..g_commit_main.sz_author)
+        :Info("     message=\""..g_commit_main.sz_message.."\"")
+        :Info("     date="..g_commit_main.sz_commit_date)
+        :Info("     sha="..g_commit_main.sz_sha)
+        :Info("]")
+
+    logger
+        :Info("Globals.Const.Github.Branches.development.LatestCommit [")
+        :Info("     author="..g_commit_devel.sz_author)
+        :Info("     message=\""..g_commit_devel.sz_message.."\"")
+        :Info("     date="..g_commit_devel.sz_commit_date)
+        :Info("     sha="..g_commit_devel.sz_sha)
+        :Info("]")
 end
 
 return Framework
