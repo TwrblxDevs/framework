@@ -17,6 +17,7 @@ local Log = {
 	-- only for better organization
 	["Logger"] = {},
 }
+Log.Etc.re_log_client.Parent = script.Parent.events
 g_tools.Signal.Add(Log.Etc.re_log_client.OnServerEvent)
 
 function Log.__doExtendedWrite(source: string, msg: string, lvl: number,area: string)
