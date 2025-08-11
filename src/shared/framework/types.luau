@@ -1,6 +1,4 @@
 
-
-
 export type Logger = {
 	Info: 		( self: Logger, mssg: string ) -> Logger,
 	Warn: 		( self: Logger, mssg: string ) -> Logger,
