@@ -17,7 +17,7 @@ local Log = {
 	},
 
 	-- only for better organization
-	["g_types.Logger"] = {},
+	["Logger"] = {},
 }
 Log.Etc.re_log_client.Parent = script.Parent.events
 g_tools.Signal.Add(Log.Etc.re_log_client.OnServerEvent)
