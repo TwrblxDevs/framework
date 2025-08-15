@@ -1,6 +1,6 @@
 local g_globals = require(script.Parent.globals)
 local g_http = game:GetService("HttpService")
-local Logger = require(game.ReplicatedStorage.rift_framework.framework.log).Logger.New(script.Name)
+local Logger = require(game.ReplicatedStorage.rift_framework).Logger.New(script.Name)
 
 local Http = {}
 

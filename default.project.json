@@ -35,6 +35,15 @@
       "$ignoreUnknownInstances": true
     },
 
+    "ServerStorage": {
+      "rift_framework": {
+        "$path": "src/server"
+      },
+
+      "$ignoreUnknownInstances": true
+    },
+
+
     "StarterPlayer": {
       "StarterPlayerScripts": {
         "rift_framework": {
