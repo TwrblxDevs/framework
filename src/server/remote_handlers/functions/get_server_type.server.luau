@@ -1,4 +1,6 @@
-local remote = require("@libs/remotes").functions.get_server_type
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local rift_framework = ReplicatedStorage.rift_framework
+local remote = require(rift_framework.events.remote_function).get_server_type
 
 local function getType()
     if game.PrivateServerId ~= "" then
@@ -12,6 +14,6 @@ local function getType()
     end
 end
 
-remote.OnServerInvoke:Connect(function(_plr: Player)
+remote.OnServerInvoke = function(_plr: Player)
     return getType()
-end)
+end
