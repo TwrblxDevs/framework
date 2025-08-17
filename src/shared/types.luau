@@ -39,11 +39,13 @@ export type Logger = {
 export type ServiceSignal = {
     Send: (
         self: ServiceSignal,
+        sid: number, -- service id
         signal: number
     ) -> ServiceSignal,
 
     SetSignalHandler: (
         self: ServiceSignal,
+        sig: number,
         handler: SignalHandlerFunction
     ) -> ServiceSignal,
 
@@ -55,9 +57,11 @@ export type ServiceSignal = {
 export type Service = {
     service_name: string,
     service_status: number, -- Globals.Enum.SERVICESTATUS
-    service_runner: ModuleScript,
     service_id: number,
-    
+
+    service_runner: ModuleScript,
+    signal: ServiceSignal,
+
     Stop: __internal_SelfFunc<Service>,
     Start: __internal_SelfFunc<Service>,
     
