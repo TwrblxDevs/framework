@@ -16,6 +16,8 @@ return {
         ['STOPPED'] = 2,
         ['STOPPING'] = 3,
         ['UNKNOWN'] = 4,
+        ['WAITING'] = 5,
+        ['NONE'] = 6
     },
 
     ['SIGNALS'] = {
@@ -26,4 +28,5 @@ return {
         ['SIGURGNT'] = 4,
         ['SIGMSG'] = 5,
     },
+
 }

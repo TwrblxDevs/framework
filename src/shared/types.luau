@@ -4,6 +4,10 @@ export type __internal_LogFunc = (
     msg: string
 ) -> Logger
 
+export type ServiceEntryFunc = (
+    service: Service
+) -> Logger
+
 export type SignalHandlerFunction = (
     signal: number
 ) -> never
@@ -39,23 +43,31 @@ export type Logger = {
 export type ServiceSignal = {
     Send: (
         self: ServiceSignal,
-        signal: number
+        signal: number -- Globals.Enum.SIGNALS
     ) -> ServiceSignal,
 
     SetSignalHandler: (
         self: ServiceSignal,
+        signal: number, -- Globals.Enum.SIGNALS
         handler: SignalHandlerFunction
     ) -> ServiceSignal,
 
     __internal: {
         --[[ used to find the handler, if not found fallback to default handler ]]
+        ['SIGSTOP']: SignalHandlerFunction,
+        ['SIGUSR1']: SignalHandlerFunction,
+        ['SIGUSR2']: SignalHandlerFunction,
+        ['SIGMSG']: SignalHandlerFunction,
+        ['SIGURGNT']: SignalHandlerFunction
     },
+
+    __type_name: "ServiceSignal",
 }
 
 export type Service = {
     service_name: string,
     service_status: number, -- Globals.Enum.SERVICESTATUS
-    service_runner: ModuleScript,
+    service_runner: Instance,
     service_id: number,
     
     Stop: __internal_SelfFunc<Service>,
@@ -66,6 +78,9 @@ export type Service = {
         new: number --[[Globals.Enum.SERVICESTATUS]]
     ) -> Service,
 
+    Signaling: ServiceSignal,
+    
+    __service_internal: {},
     __type_name: "Service",
 }
 
