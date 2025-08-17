@@ -75,7 +75,6 @@ if ok then
 			warn(response)
 		end
 	end
-	warn(response)
 else
 	warn("error fetching github api: "..response)
 end
@@ -103,7 +102,6 @@ if ok then
 			warn(response)
 		end
 	end
-	warn(response)
 else
 	warn("error fetching github api: "..response)
 end

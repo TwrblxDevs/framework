@@ -1,4 +1,5 @@
 local g_globals = require(script.globals)
+local g_tools = require(script.tools)
 local g_commit_main = g_globals.Const.Github.Branches.main.LatestCommit
 local g_commit_devel = g_globals.Const.Github.Branches.development.LatestCommit
 local log = require(script.log)
@@ -22,6 +23,13 @@ function Framework.runTests()
         :Info("     date="..g_commit_devel.sz_commit_date)
         :Info("     sha="..g_commit_devel.sz_sha)
         :Info("]")
+end
+
+function Framework.test_depercated()
+
+    g_tools.Macros.StudioOnlyBlock(function()
+        print("shot not run!")
+    end,false)
 end
 
 

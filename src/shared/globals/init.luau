@@ -8,4 +8,6 @@ return {
 	["Enum"] = require(script.enum),
 
 	["Misc"] = require(script.misc),
+
+	["ErrorCodes"] = require(script.error_codes),
 }

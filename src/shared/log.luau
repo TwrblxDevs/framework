@@ -168,38 +168,38 @@ function Log.Logger.New(source: string): g_types.Logger
 	}
 
 	local function _info(self: g_types.Logger, msg: string): g_types.Logger
-		Log.Info(msg, self.__data.sz_source)
+		Log.Info(msg, self.data.sz_source)
 
 		return self
 	end
 
 	local function _warn(self: g_types.Logger, msg: string): g_types.Logger
-		Log.Warn(msg, self.__data.sz_source)
+		Log.Warn(msg, self.data.sz_source)
 
 		return self
 	end
 
 	local function _error(self: g_types.Logger, msg: string): g_types.Logger
-		Log.Error(msg, self.__data.sz_source)
+		Log.Error(msg, self.data.sz_source)
 
 		return self
 	end
 
 	local function _debug(self: g_types.Logger, msg: string): g_types.Logger
-		Log.Debug(msg, self.__data.sz_source)
+		Log.Debug(msg, self.data.sz_source)
 
 		return self
 	end
 
 	local function _enter_func(self: g_types.Logger,name: string): g_types.Logger
 		self.data.bl_is_inside_function = true
-		self.data.sz_source = self.__data.sz_original_source.."::"..name
+		self.data.sz_source = self.data.sz_original_source.."::"..name
 		return self
 	end
 
 	local function _exit_func(self: g_types.Logger): g_types.Logger
 		self.data.bl_is_inside_function = false
-		self.data.sz_source = self.__data.sz_original_source
+		self.data.sz_source = self.data.sz_original_source
 		return self
 	end
 
