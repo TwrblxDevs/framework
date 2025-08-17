@@ -5,7 +5,7 @@ local Const = {
 	["sz_version"] = "INDEV",
 	["sz_current_game"] = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or game.Name,
 	["dw_current_game_version"] = game.PlaceVersion,
-	['dw_latest_game_version'] = game:GetService('InsertService'):GetLatestAssetVersionAsync(game.PlaceId),
+	["dw_latest_game_version"] = game:GetService("InsertService"):GetLatestAssetVersionAsync(game.PlaceId),
 
 	["bl_enable_external_log"] = true,
 	["Http"] = {
@@ -13,43 +13,53 @@ local Const = {
 		["safe_urls"] = {
 			"https://roblox.com",
 			"http://localhost",
-			"http://api.emgkwc.com"
 		},
 	},
-    
-	['Github'] = {
-		['sz_organization'] = "Rift-Creations-Inc",
-		['sz_repo'] = "framework",
-		['sz_url'] = "https://github.com/Rift-Creations-Inc/framework/",
 
-		['Branches'] = {
-			['main'] = {
-				['LatestCommit'] = {
-					['sz_sha'] = "",
-					['sz_message'] = "",
-					['sz_author'] = "",
-					['sz_commit_date'] = "",
-				}
+	["Github"] = {
+		["sz_organization"] = "Rift-Creations-Inc",
+		["sz_repo"] = "framework",
+		["sz_url"] = "https://github.com/Rift-Creations-Inc/framework/",
+
+		["Branches"] = {
+			["main"] = {
+				["LatestCommit"] = {
+					["sz_sha"] = "",
+					["sz_message"] = "",
+					["sz_author"] = "",
+					["sz_commit_date"] = "",
+				},
 			},
 
-			['development'] = {
-				['LatestCommit'] = {
-					['sz_sha'] = "",
-					['sz_message'] = "",
-					['sz_author'] = "",
-					['sz_commit_date'] = "",
-				}
+			["development"] = {
+				["LatestCommit"] = {
+					["sz_sha"] = "",
+					["sz_message"] = "",
+					["sz_author"] = "",
+					["sz_commit_date"] = "",
+				},
 			},
 		},
 	},
+
+	["Permissions"] = {
+		["bl_enable_permissions"] = true, -- Enable permissions system
+		["flags"] = {},
+	},
+
+	["Globals"] = {
+		["bl_enable_globals"] = true, -- Enable global variables
+	},
+
+	["HttpService"] = HttpService,
 }
-
 
 ----- FREEZE STUFF ------
 
 -- init some Globals before we freeze...
 --		ts worked first  try :)
-local devel_url = `https://api.github.com/repos/{Const.Github.sz_organization}/{Const.Github.sz_repo}/commits?sha=development&per_page=1`
+local devel_url =
+	`https://api.github.com/repos/{Const.Github.sz_organization}/{Const.Github.sz_repo}/commits?sha=development&per_page=1`
 local main_url = `https://api.github.com/repos/{Const.Github.sz_organization}/{Const.Github.sz_repo}/commits`
 local ok, response
 
@@ -70,15 +80,13 @@ if ok then
 			commit_data.sz_message = latest.commit.message
 			commit_data.sz_author = latest.commit.author.name
 			commit_data.sz_commit_date = latest.commit.author.date
-
 		else
 			warn(response)
 		end
 	end
 else
-	warn("error fetching github api: "..response)
+	warn("error fetching github api: " .. response)
 end
-
 
 -- framework:development
 ok, response = pcall(function()
@@ -97,13 +105,12 @@ if ok then
 			commit_data.sz_message = latest.commit.message
 			commit_data.sz_author = latest.commit.author.name
 			commit_data.sz_commit_date = latest.commit.author.date
-
 		else
 			warn(response)
 		end
 	end
 else
-	warn("error fetching github api: "..response)
+	warn("error fetching github api: " .. response)
 end
 --
 
