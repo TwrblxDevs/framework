@@ -22,21 +22,12 @@ local Const = {
         ["sz_url"] = "https://github.com/Rift-Creations-Inc/framework/",
     },
 
-<<<<<<< HEAD
 	["Permissions"] = {
 		["bl_enable_permissions"] = true, -- Enable permissions system
 		["flags"] = {
 			{ "isTester", "isAdmin", "isModerator" }, -- Example flag set
 		},
 	},
-=======
-    ["Permissions"] = {
-        ["bl_enable_permissions"] = true, -- Enable permissions system
-        ["flags"] = {
-            ["isTester"] = true,
-        },
-    },
->>>>>>> a03614d (idk)
 
     ["Globals"] = {
         ["bl_enable_globals"] = true, -- Enable global variables

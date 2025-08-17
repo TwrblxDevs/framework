@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local err = require(script.Parent.err)
-local log = require(ReplicatedStorage.rift_framework.log)
+local log = require(ReplicatedStorage.rift_framework.log).Logger.New(script.Name)
 
 local g_globals = require(ReplicatedStorage.rift_framework.globals.const)
 
@@ -8,7 +8,7 @@ local permissons = {}
 local loadedFlags = {}
 
 local function logWarn(msg)
-    log:Warn("[BitFlags] " .. msg)
+    log:Warn(msg)
 end
 
 local function isEnabled()
@@ -17,8 +17,7 @@ end
 
 local function requireEnabled()
     if not isEnabled() then
-        local funcName = debug.info(2, "n") or "Unknown"
-        logWarn(funcName .. " called, but permissions are disabled")
+        --logWarn(funcName .. " called, but permissions are disabled")
         err.throw(0xA)
         return false
     end
