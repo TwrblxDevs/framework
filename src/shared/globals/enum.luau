@@ -16,5 +16,14 @@ return {
         ['STOPPED'] = 2,
         ['STOPPING'] = 3,
         ['UNKNOWN'] = 4,
-    }
+    },
+
+    ['SIGNALS'] = {
+        ['SIGSTOP'] = 0,
+        ['SIGKILL'] = 1,
+        ['SIGUSR1'] = 2,
+        ['SIGUSR2'] = 3,
+        ['SIGURGNT'] = 4,
+        ['SIGMSG'] = 5,
+    },
 }
