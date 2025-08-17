@@ -43,21 +43,12 @@ export type Logger = {
 export type ServiceSignal = {
     Send: (
         self: ServiceSignal,
-<<<<<<< HEAD
-        sid: number, -- service id
-        signal: number
-=======
         signal: number -- Globals.Enum.SIGNALS
->>>>>>> a828c162702ce10c6fd51ffcf2b745b9a5a0da43
     ) -> ServiceSignal,
 
     SetSignalHandler: (
         self: ServiceSignal,
-<<<<<<< HEAD
-        sig: number,
-=======
         signal: number, -- Globals.Enum.SIGNALS
->>>>>>> a828c162702ce10c6fd51ffcf2b745b9a5a0da43
         handler: SignalHandlerFunction
     ) -> ServiceSignal,
 
@@ -76,10 +67,7 @@ export type ServiceSignal = {
 export type Service = {
     service_name: string,
     service_status: number, -- Globals.Enum.SERVICESTATUS
-<<<<<<< HEAD
-=======
     service_runner: Instance,
->>>>>>> a828c162702ce10c6fd51ffcf2b745b9a5a0da43
     service_id: number,
 
     service_runner: ModuleScript,
