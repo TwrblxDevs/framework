@@ -44,7 +44,9 @@ local Const = {
 
 	["Permissions"] = {
 		["bl_enable_permissions"] = true, -- Enable permissions system
-		["flags"] = {},
+		["flags"] = {
+			["isTester"] = true,
+		},
 	},
 
 	["Globals"] = {
