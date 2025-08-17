@@ -1,0 +1,6 @@
+{
+    "aliases": {
+        "libs": "src/shared",
+        "globals": "src/shared/globals"
+    }
+}

@@ -43,6 +43,7 @@ export type Logger = {
 export type ServiceSignal = {
     Send: (
         self: ServiceSignal,
+        sid: number,
         signal: number -- Globals.Enum.SIGNALS
     ) -> ServiceSignal,
 
@@ -69,7 +70,9 @@ export type Service = {
     service_status: number, -- Globals.Enum.SERVICESTATUS
     service_runner: Instance,
     service_id: number,
-    
+
+    signal: ServiceSignal,
+
     Stop: __internal_SelfFunc<Service>,
     Start: __internal_SelfFunc<Service>,
     

@@ -3,11 +3,11 @@
 return {
 
 	 ["LOGLEVEL"] = {
-		["DEBUG"] = 0,
-	    ["INFO"] = 1,
-        ["WARNING"] = 2,
-        ["ERROR"] = 3,
-        ["NONE"] = 4,
+		["DEBUG"]           = 0,
+	    ["INFO"]            = 1,
+        ["WARNING"]         = 2,
+        ["ERROR"]           = 3,
+        ["NONE"]            = 4,
     },
 
     ["SERVICESTATUS"] = {
@@ -21,12 +21,11 @@ return {
     },
 
     ['SIGNALS'] = {
-        ['SIGSTOP'] = 0,
-        ['SIGKILL'] = 1,
-        ['SIGUSR1'] = 2,
-        ['SIGUSR2'] = 3,
-        ['SIGURGNT'] = 4,
-        ['SIGMSG'] = 5,
+        ['SIGSTOP']         = 0,
+        ['SIGUSR1']         = 1,
+        ['SIGUSR2']         = 2,
+        ['SIGMSG']          = 3,
+        ['SIGURGNT']        = 4,
     },
 
 }
