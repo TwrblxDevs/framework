@@ -8,7 +8,7 @@ function Framework.runTests()
     local logger = log.Logger.New("Framework::runTests")
 
     logger:Info("runTests() called...")
-    permissons.Init(g_globals.Const.Permissions.flags)
+    permissons.Init("flags", g_globals.Const.Permissions.flags[1])
 end
 
 function Framework.test_depercated()
